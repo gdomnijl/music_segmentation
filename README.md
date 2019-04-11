@@ -17,13 +17,16 @@ link to SALAMI data (https://github.com/DDMAL/salami-data-public)
 
   1.5 Feed through an identity map to check
 
+
 2. Building network architecture **By 21st Apr (Week 1 Sun)**
 
   2.1 LSTM
 
   2.2 Attention (encoder-only self-attention?)
 
+
 3. Training **By 26th Apr (Week 2 Fri)**
+
 
 4. Evaluation **By 4rd May (Week 3 Fri)**
 
@@ -37,11 +40,13 @@ Two different models: one model to predict where the boundary of section is (a p
 We need to train these two models sequentially because we need a good enough boundary-predicting model in order to go about section classification. 
 
 1. First model (boundary model)
+
 *input: spectrogram at each time step*
 *output: (start, end) - two timestamp of where boundary starts and ends*
 *label: (start, end) - computed from 4-second-window centered at the section onset time (e.g. data looks like 1:11 Bridge, 2:40 Chorus; boundary is (1:09, 1:13), (2:38, 2:42))*
 
 2. Second model (section model) - sequential version 
+
 *input: spectrogram at each time step, if frames fall into previously predicted boundary range, replace it with a delimiter/token vector representation (ASK**)*
 *intermediate hidden state: representation of the section is captured using the last time step activation before any boundary delimiter;*
 *output: each section representation generates a prediction of what that section is.*
