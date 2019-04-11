@@ -6,10 +6,15 @@ link to SALAMI data (https://github.com/DDMAL/salami-data-public)
 
 ## Todos:
 1. Data collection **By 19th Apr (Week 1 Fri)**
+
 1.1 Set up cloud instance **Nami**
+
 1.2 Download audio files from SALAMI **Jon**
+
 1.3 Download labels and mark boundary on 4-second window **Jinlin**
+
 1.4 Transform audio files to spectrogram, format it to vector form each frame **Jinlin**
+
 1.5 Feed through an identity map to check
 
 2. Building network architecture **By 21st Apr (Week 1 Sun)**
