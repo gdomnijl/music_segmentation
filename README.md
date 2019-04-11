@@ -7,9 +7,8 @@ link to SALAMI data (https://github.com/DDMAL/salami-data-public)
 ## Todos:
 1. Data collection **By 19th Apr (Week 1 Fri)**
 
-  1.1 Set up cloud instance **Nami**
-  
-  1.2 Download audio files from SALAMI **Jon**
+- Set up cloud instance **Nami**
+- Download audio files from SALAMI **Jon**
 
   1.3 Download labels and mark boundary on 4-second window **Jinlin**
 
