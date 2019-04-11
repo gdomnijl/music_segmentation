@@ -9,29 +9,19 @@ link to SALAMI data (https://github.com/DDMAL/salami-data-public)
 
 - Set up cloud instance **Nami**
 - Download audio files from SALAMI **Jon**
-
-  1.3 Download labels and mark boundary on 4-second window **Jinlin**
-
-  1.4 Transform audio files to spectrogram, format it to vector form each frame **Jinlin**
-
-  1.5 Feed through an identity map to check
-
+- Download labels and mark boundary on 4-second window **Jinlin**
+- Transform audio files to spectrogram, format it to vector form each frame **Jinlin**
+- Feed through an identity map to check
 
 2. Building network architecture **By 21st Apr (Week 1 Sun)**
-
-  2.1 LSTM
-
-  2.2 Attention (encoder-only self-attention?)
-
+- LSTM
+- Attention (encoder-only self-attention?)
 
 3. Training **By 26th Apr (Week 2 Fri)**
 
-
 4. Evaluation **By 4rd May (Week 3 Fri)**
-
-  4.1 Distance metric (BLEU-like precision metric: overlap with ground truth/prediction sequence length) for first model (boundary or not-boundary)
-
-  4.2 Cross entropy loss for second model (label/prediction discrepency)
+- Distance metric (BLEU-like precision metric: overlap with ground truth/prediction sequence length) for first model (boundary or not-boundary)
+- Cross entropy loss for second model (label/prediction discrepency)
 
 ### Notes on network structure
 Two different models: one model to predict where the boundary of section is (a pair of timestamp: start and end) to segment the music into sections; the subsequent model to classify each section as one of the section label.
