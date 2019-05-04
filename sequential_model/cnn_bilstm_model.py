@@ -62,11 +62,11 @@ class CNN_biLSTM_Model:
 				input_layer = tf.nn.dropout(pool, self.cnn_dropout)
 			
 			cnn_output = tf.transpose(input_layer, [0,3,1,2])
-			#tf.layers.Flatten()(input_layer)
+			cnn_output_flat = tf.layers.Flatten()(input_layer)
 
 		with tf.variable_scope('fc'):
 			fc_output = tf.layers.dense(
-				inputs = cnn_output, units = self.lstm_input_dim,
+				inputs = cnn_output_flat, units = self.lstm_input_dim,
 				kernel_initializer=tf.contrib.layers.xavier_initializer(),
                 kernel_regularizer=tf.contrib.layers.l2_regularizer(self.fc_regularization)) ## fc
 			print("#####",tf.shape(fc_output))
@@ -81,11 +81,11 @@ class CNN_biLSTM_Model:
 				)
 			
 			## check: tf dynamically get shape
-			C = fc_output.get_shape().as_list()[1]
-			H = fc_output.get_shape().as_list()[2]
-			W = fc_output.get_shape().as_list()[3]
+			# C = fc_output.get_shape().as_list()[1]
+			# H = fc_output.get_shape().as_list()[2]
+			# W = fc_output.get_shape().as_list()[3]
 			T = self.sequence_len
-			lstm_input = tf.reshape(fc_output, [-1, T, C*H*W])
+			lstm_input = tf.reshape(fc_output, [-1, T, self.lstm_input_dim])
 
 			
 			(output_fw, output_bw), _  = tf.nn.bidirectional_dynamic_rnn(
@@ -111,7 +111,6 @@ class CNN_biLSTM_Model:
 		self.loss = 0
 		
 		losses = tf.nn.sparse_softmax_cross_entropy_with_logits(logits = self.logits, labels = self.labels)
-		## TODO: using mean after masking?
 		self.loss = tf.reduce_mean(losses)
 		print("##### loss after reduce mean:", self.loss)
 
@@ -191,13 +190,11 @@ class CNN_biLSTM_Model:
 					self.labels: y_test
 				})
 
-		# for i in y_test.shape[0]:
-		# 	y_seq = y_test[i, :]
-		# 	pred_seq = pred[i, :]
+		for i in y_test.shape[0]:
+			y_seq = y_test[i, :]
+			pred_seq = pred[i, :]
 			
 		return pred
-
-	def e
 
 
 
