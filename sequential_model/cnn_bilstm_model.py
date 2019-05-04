@@ -20,7 +20,6 @@ class CNN_biLSTM_Model:
 		self.sequence_len = bilstm_config['sequence_len']
 		self.lstm_dropout = bilstm_config['lstm_dropout']
 
-
 		self.grad_clipping = train_config['grad_clipping']
 
 	def _add_placeholders(self):
@@ -144,18 +143,19 @@ class CNN_biLSTM_Model:
 		return X_batch, y_batch
 
 
-	def train(self, X_train, y_train, epochs, batch_size, learning_rate = 1e-3): ## early stoping
+	def train(self, X_train, y_train, epochs, batch_size, model_name, learning_rate = 1e-3): ## early stoping
     	## TODO: model saving
+		tf.train.Saver()
 		with tf.Session() as sess:
 			sess.run(tf.global_variables_initializer())
 
-			N, C, H, W = X_train.shape 
+			N, T, C, H, W = X_train.shape 
 			num_batch = int(N / batch_size)
 			print("num_batch ", num_batch)
-			X_train_seq = X_train.reshape([-1, self.sequence_len, C, H, W])
+			#X_train_seq = X_train.reshape([-1, self.sequence_len, C, H, W])
 			for e in range(epochs):
 				X_shuffled, y_shuffled = shuffle(
-    				X_train_seq,
+    				X_train,
     				y_train) ## will only shuffle the first dimension
 				
 				for i in range(num_batch):
@@ -177,9 +177,29 @@ class CNN_biLSTM_Model:
 					if i % PRINT_LOSS_EVERY == 0:
 						print("Training loss at epoch %d batch %d: %f" % (e, i, loss_train))
 
-
+			saver.save(sess, model_name)
 				## TODO: if early stopping
 				## TODO: model saving
+
+	def predict(self, X_test, y_test, model_name):
+		saver = tf.train.Saver()
+		with tf.Session() as sess:
+			saver.restore(sess, model_name)
+
+			pred = sess.run(self.labels, feed_dict = {
+					self.inputs: X_test,
+					self.labels: y_test
+				})
+
+		# for i in y_test.shape[0]:
+		# 	y_seq = y_test[i, :]
+		# 	pred_seq = pred[i, :]
+			
+		return pred
+
+	def e
+
+
 
 
 cnn_config = {'filter_config': {'filter_size': [4, 4],
@@ -206,7 +226,7 @@ T = 7
 C = 1
 H = 128
 W = 128
-X_train = np.random.rand(N*T, C, H, W)
+X_train = np.random.rand(N, T, C, H, W)
 y_train = np.random.randint(0, 6, size = (N, T))
 
 batch_size = 8
